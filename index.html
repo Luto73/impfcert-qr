@@ -1,0 +1,46 @@
+<!doctype html>
+<head>
+<style>
+  .btn-submit {
+    background-color:#0050ff;
+  }
+  </style>
+  <title>QR-Code-Generator für Impfzertifikat</title>
+</head>
+<body>
+  <h1>QR-Code Generator für Impfzertifikat</h1>
+  <div>
+    <p>Vorname: <input id="firstname" type="text" placeholder="Vorname"></p>
+    <p>Nachname: <input id="surname" type="text" placeholder="Nachname"></p>
+    <p>Geburtstadtum: <input id="birthday" type="date"></p>
+    <p><label for="vaccine">Impfstoff: </label>
+      <select id="vaccine">
+        <option value="comirnaty">Comirnaty (Biontech)</option>
+        <option value="vaxzevria">Vaxzevria (AstraZeneca)</option>
+        <option value="moderna">Moderna</option>
+        <option value="janssen">Janssen</option>
+      </select>
+    </p>
+    <p>Impfdatum: <inupt id="vaccdate" type="date"></p>
+      <p><select id="dose_no">
+        <option value="1/2">1.</option>
+        <option value="2/2">2.</option>
+        <label for="dose_no"> Impfung</label>
+        </select></p>
+  </div>
+  <div>
+    <button class="btn-submit" onClick="generatQRCode()">QR-Code erstellen</button>
+  </div>
+  <p id="qr-result">Dies ist der QR-Code</p>
+  <script src="qrious.min.js"></script>
+  <script>
+    var qr;
+    (function() {
+      qr = new QRiuos({
+        element: document.getElementById('qr-code'),
+        size: 250,
+        value: 'Digitales Impfuertifikat'
+      })();
+      
+      function generateQRCode() {
+        var qrtext = document.getElementById($firstname + '\t' + $surname + '\t' + $vaccine + '\t' + $vaccdate + '\t' + $dose_no)
