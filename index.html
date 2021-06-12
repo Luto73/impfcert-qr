@@ -1,4 +1,5 @@
-<!doctype html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
 <head>
 <style>
   .btn-submit {
@@ -11,7 +12,7 @@
   <h1>QR-Code Generator für Impfzertifikat</h1>
   <div>
     <p>Vorname: <input id="firstname" type="text" placeholder="Vorname"></p>
-    <p>Nachname: <input id="surname" type="text" placeholder="Nachname"></p>
+    <p>Nachname: <input id="lastname" type="text" placeholder="Nachname"></p>
     <p>Geburtstadtum: <input id="birthday" type="date"></p>
     <p><label for="vaccine">Impfstoff: </label>
       <select id="vaccine">
@@ -39,8 +40,25 @@
       qr = new QRiuos({
         element: document.getElementById('qr-code'),
         size: 250,
-        value: 'Digitales Impfuertifikat'
+        value: 'Digitales Impfzertifikat'
       })();
       
       function generateQRCode() {
-        var qrtext = document.getElementById($firstname + '\t' + $surname + '\t' + $vaccine + '\t' + $vaccdate + '\t' + $dose_no)
+        // var qrtext = document.getElementById($firstname + '\t' + $lastname + '\t' + $vaccine + '\t' + $vaccdate + '\t' + $dose_no);
+        var qrtext = document.getElementById('firstname') + '\t' +
+                     document.getElementById('lastname') + '\t' +
+                     document.getElementById('birthday') + '\t' +
+                     document.getElementById('vaccine') + '\t' +
+                     document.getElementById('vaccdate') + '\t' +
+                     document.getElementById('dose_no');
+        document.getElementById("qr-result").innerHTML = "QR-Code für " + qrtext + ":";
+        alert(qrtext);
+        qr.set({
+          foreground: 'black',
+          size: 200,
+          value: qrtext
+        });
+      }
+  </script>
+</body>
+</html>
