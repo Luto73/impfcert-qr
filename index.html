@@ -1,64 +1,86 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html>
-<head>
-<style>
-  .btn-submit {
-    background-color:#0050ff;
-  }
-  </style>
-  <title>QR-Code-Generator für Impfzertifikat</title>
-</head>
-<body>
-  <h1>QR-Code Generator für Impfzertifikat</h1>
-  <div>
-    <p>Vorname: <input id="firstname" type="text" placeholder="Vorname"></p>
-    <p>Nachname: <input id="lastname" type="text" placeholder="Nachname"></p>
-    <p>Geburtstadtum: <input id="birthday" type="date"></p>
-    <p><label for="vaccine">Impfstoff: </label>
-      <select id="vaccine">
-        <option value="comirnaty">Comirnaty (Biontech)</option>
-        <option value="vaxzevria">Vaxzevria (AstraZeneca)</option>
-        <option value="moderna">Moderna</option>
-        <option value="janssen">Janssen</option>
-      </select>
-    </p>
-    <p>Impfdatum: <inupt id="vaccdate" type="date"></p>
-      <p><select id="dose_no">
-        <option value="1/2">1.</option>
-        <option value="2/2">2.</option>
-        <label for="dose_no"> Impfung</label>
-        </select></p>
-  </div>
-  <div>
-    <button class="btn-submit" onClick="generatQRCode()">QR-Code erstellen</button>
-  </div>
-  <p id="qr-result">Dies ist der QR-Code</p>
-  <script src="qrious.min.js"></script>
-  <script>
-    var qr;
-    (function() {
-      qr = new QRiuos({
-        element: document.getElementById('qr-code'),
-        size: 250,
-        value: 'Digitales Impfzertifikat'
-      })();
-      
-      function generateQRCode() {
-        // var qrtext = document.getElementById($firstname + '\t' + $lastname + '\t' + $vaccine + '\t' + $vaccdate + '\t' + $dose_no);
-        var qrtext = document.getElementById('firstname') + '\t' +
-                     document.getElementById('lastname') + '\t' +
-                     document.getElementById('birthday') + '\t' +
-                     document.getElementById('vaccine') + '\t' +
-                     document.getElementById('vaccdate') + '\t' +
-                     document.getElementById('dose_no');
-        document.getElementById("qr-result").innerHTML = "QR-Code für " + qrtext + ":";
-        alert(qrtext);
-        qr.set({
-          foreground: 'black',
-          size: 200,
-          value: qrtext
-        });
-      }
-  </script>
-</body>
+<!doctype html>
+	<head>
+		<style>
+			/* CSS comes here */
+			body {
+			    padding:20px;
+			}
+			input {
+			    padding:5px;
+			    background-color:transparent;
+			    border:none;
+			    border-bottom:solid 4px #8c52ff;
+			    width:250px;
+			    font-size:16px;
+			}
+			
+			.qr-btn {
+			    background-color:#8c52ff;
+			    padding:8px;
+			    color:white;
+			    cursor:pointer;
+			}
+		</style>
+		
+		<title>JavaScript QR Code Generator</title>
+	</head>
+	<body>
+		<h3>QR Code Generator</h3>
+        <div><input id="vorname" type="text" placeholder="Vorname"/></div>
+		<div><input id="nachname" type="text" placeholder="Nachname" /></div>
+		<div><input id="geburtstag" type="date" placeholder="14.06.1971" /></div>
+		<div>
+			<select id="impfstoff">
+				<option value="Comirnaty">Comirnaty</option>
+				<option value="Moderna">COVID-19 Vaccine Moderna (Moderna)</option>
+				<option value="Vaxzevria">Vaxzevria (AstraZeneca)</option>
+				<option value="Janssen">COVID-19 Vaccine Janssen (Janssen-Cilag</option>
+			</select>
+		</div>
+		<div><input id="impfdatum" type="date" placeholder="03.05.2021" /></div>
+		<div>
+			<select id="dosis">
+				<option value="1/2">1/2</option>
+				<option value="2/2">2/2</option>
+			</select>
+		</div>
+        <br/>
+        <div>
+            <button class="qr-btn" onclick="generateQRCode()">Create QR Code</button>
+        </div>
+        <br/>
+        <p id="qr-result">This is deault QR code:</p>
+        <canvas id="qr-code"></canvas>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+		<script>
+			/* JS comes here */
+			var qr;
+			(function() {
+                    qr = new QRious({
+                    element: document.getElementById('qr-code'),
+                    size: 200,
+                    value: 'John\tDoe\t12.04.1982\tComirnaty\t06.03.2021\t1'
+                });
+            })();
+            
+            function generateQRCode() {
+                var vorname = document.getElementById("vorname").value;
+				var nachname = document.getElementById("nachname").value;
+				var geburtstag = document.getElementById("geburtstag").value;
+				var impfstoff = document.getElementById("impfstoff").value;
+				var impfdatum = document.getElementById("impfdatum").value;
+				var dosis = document.getElementById("dosis").value;
+				var qrtext = vorname + "\t" + nachname + "\t" + geburtstag + "\t" + impfstoff + "\t" + impfdatum + "\t" + dosis;
+                document.getElementById("qr-result").innerHTML = "QR code for " + qrtext +":";
+                alert(qrtext);
+                qr.set({
+                    foreground: 'black',
+                    size: 200,
+                    value: qrtext
+                });
+            }
+		</script>
+        
+	</body>
 </html>
